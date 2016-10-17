@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Shawty (g)URL</h1>
+
     <form class="" action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" name="" value="Shorty Up">
     </form>
+
+    <h1>Created Bookmarks</h1>
+    {% for bookmark in bookmark_list %}
+        <p>
+            <b>Short Link:</b> <a href="{% url 'short_view' bookmark.short_url %}">localhost:8000/{{ bookmark.short_url }}</a> |
+            <b>Title: </b> {{ bookmark }} |
+            <b>Description: </b> {{ bookmark.description }} |
+            <b>Created: </b> {{ bookmark.created }} |
+            <b>By:</b> {{ bookmark.user }}
+        </p>
+    {% endfor %}
+
+
 {% endblock %}
