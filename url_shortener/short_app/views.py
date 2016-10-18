@@ -1,17 +1,25 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from short_app.models import Bookmark, Click
 from django.urls import reverse_lazy
 from random import choice
 from string import ascii_letters, digits
 from django.http import HttpResponseRedirect
 
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = UserCreationForm
+    success_url = reverse_lazy("bookmark_create_view")
+
+
 class BookmarkCreateView(CreateView):
     model = Bookmark
     success_url = reverse_lazy("bookmark_create_view")
-    fields = ('title', 'description', 'url')
+    fields = ('title', 'description', 'url', 'private')
 
     def form_valid(self, form):
         instance = form.save(commit=False)
@@ -25,6 +33,12 @@ class BookmarkCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context["bookmark_list"] = Bookmark.objects.all()
         return context
+
+
+class BookmarkUpdateView(UpdateView):
+    model = Bookmark
+    success_url = reverse_lazy("bookmark_create_view")
+    fields = ('title', 'description', 'url', 'private')
 
 
 class ShortView(View):

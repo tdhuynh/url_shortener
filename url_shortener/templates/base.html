@@ -12,11 +12,18 @@
         </style>
     </head>
     <body>
+
+        {% if not request.user.is_authenticated %}
+                      <a href="{% url 'user_create_view' %}">Create a New Login</a>
+                      <li><a href="{% url 'login' %}">Login</a></li>
+                      {% else %}
+                      <li><a href="{% url 'logout' %}?next={% url 'bookmark_create_view' %}">Logout</a></li>
+                  {% endif %}
         <div class="container">
             <h1>Earl's Short URLs</h1>
-
             {% block content %}
             {% endblock %}
+
         </div>
     </body>
 </html>
