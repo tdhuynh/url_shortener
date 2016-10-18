@@ -8,7 +8,6 @@ from random import choice
 from string import ascii_letters, digits
 from django.http import HttpResponseRedirect
 
-
 class BookmarkCreateView(CreateView):
     model = Bookmark
     success_url = reverse_lazy("bookmark_create_view")
@@ -30,6 +29,6 @@ class BookmarkCreateView(CreateView):
 
 class ShortView(View):
     def get(self, request, short_url):
-        short = self.kwargs['short_url']
-        full = Bookmark.objects.get(short_url=short)
+        full = Bookmark.objects.get(short_url=short_url)
+        Click.objects.create(bookmark=full)
         return HttpResponseRedirect(full.url)

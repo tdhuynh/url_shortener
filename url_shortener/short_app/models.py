@@ -15,6 +15,8 @@ class Bookmark(models.Model):
     class Meta:
         ordering = ("-created",)
 
+    def click_count(self):
+        return self.click_set.count()
 
 class Click(models.Model):
     bookmark = models.ForeignKey('short_app.Bookmark')
