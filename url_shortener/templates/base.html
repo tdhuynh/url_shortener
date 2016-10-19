@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Shawten' ur URL</title>
+        <title>URL Shortener</title>
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title">
         <style media="screen">
             body {
@@ -15,8 +15,8 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="nav navbar-nav">
-                    <h3 class="navbar-text">Earl's Short URLs</h3>
-                    <li><a href="{% url 'user_create_view' %}">Create a New Login</a></li>
+                    <h3 class="navbar-text">Url Shortener</h3>
+                    <li><a href="{% url 'user_create_view' %}">Create User</a></li>
                       {% if not request.user.is_authenticated %}
                           <li><a href="{% url 'login' %}">Login</a></li>
                           {% else %}

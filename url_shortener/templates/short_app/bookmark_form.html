@@ -2,77 +2,86 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-8">
-        <div class="row">
-        <div class="col-md-6">
-        {% if request.user.is_authenticated %}
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-6">
+      {% if request.user.is_authenticated %}
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Give Earl your URL</h3>
-                </div>
-                 <div class="panel-body">
-                    <form class="" action="" method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" name="" value="Shorty Up">
-                    </form>
-                </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Create a Short Link</h3>
+            </div>
+             <div class="panel-body">
+              <form class="" action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-default" type="submit" name="" value="Submit">
+              </form>
             </div>
         </div>
-        <div class="col-md-6">
-                <h1>Your Bookmarks</h1>
-                {% for bookmark in bookmark_list %}
-                    {% if bookmark.user == user %}
-                        <p>
-                            <b>Short Link:</b> <a href="{% url 'short_view' bookmark.short_url %}">localhost:8000/{{ bookmark.short_url }}</a>
-                        </p>
-                        <p>
-                            <b>Title: </b> {{ bookmark }} |
-                            <b>Description: </b> {{ bookmark.description }}
-                        </p>
-                        <p>
-                            <b>Created: </b> {{ bookmark.created }} |
-                            <b>By:</b> {{ bookmark.user }}
-                        </p>
-                        <p>
-                            <b>Clicks:</b> {{ bookmark.click_count }} |
-                            {% if bookmark.user.id == user.id %}
-                                <a href="{% url 'bookmark_update_view' bookmark.id %}">Edit</a>
-                                {% else %}
-                                    Public Link
-                            {% endif %}
-                        </p>
-                    {% endif %}
-                    <br><br>
-                {% endfor %}
-            {% else %}
-                <h1>Please Log In to continue with Earl's Short URLs</h1>
-        {% endif %}
-        </div>
-        </div>
-    </div>
+      </div>
 
-    <div class="col-md-4">
-        <h1>Public Bookmarks</h1>
-        {% for bookmark in bookmark_list %}
-            {% if bookmark.private == False %}
-                <p>
-                    <b>Short Link:</b> <a href="{% url 'short_view' bookmark.short_url %}">localhost:8000/{{ bookmark.short_url }}</a>
-                </p>
-                <p>
-                    <b>Title: </b> {{ bookmark }} |
-                    <b>Description: </b> {{ bookmark.description }}
-                </p>
-                <p>
-                    <b>Created: </b> {{ bookmark.created }} |
-                    <b>By:</b> {{ bookmark.user }}
-                </p>
-                <p>
-                    <b>Clicks:</b> {{ bookmark.click_count }} | Public
-                <br><br>
+      <div class="col-md-6">
+        <h1>Your Bookmarks</h1>
+          {% for bookmark in bookmark_list %}
+            {% if bookmark.user == user %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <b>Short Link:</b>
+                <a href="{% url 'short_view' bookmark.short_url %}">localhost:8000/{{ bookmark.short_url }}</a>
+              </div>
+              <div class="panel-body">
+                <b>Title: </b> {{ bookmark }}
+                <br>
+                <b>Description: </b> {{ bookmark.description }}
+              </div>
+              <div class="panel-footer">
+                <b>By:</b> {{ bookmark.user }} |
+                {% if bookmark.user.id == user.id %}
+                  <a href="{% url 'bookmark_update_view' bookmark.id %}">Edit</a>
+                  {% else %}
+                    Public Link
+                {% endif %}
+                <div class="pull-right">
+                  <b class=>Link Visits:</b>
+                  <span class="badge">{{ bookmark.click_count }}</span>
+                </div>
+
+              </div>
+            </div>
             {% endif %}
-        {% endfor %}
+          {% endfor %}
+          {% else %}
+              <h1>Create a user to continue. Then log in.</h1>
+      {% endif %}
     </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <h1>All Public Bookmarks</h1>
+      {% for bookmark in bookmark_list %}
+        {% if bookmark.private == False %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b>Short Link:</b>
+            <a href="{% url 'short_view' bookmark.short_url %}">localhost:8000/{{ bookmark.short_url }}</a>
+          </div>
+          <div class="panel-body">
+            <b>Title: </b> {{ bookmark }}
+            <br>
+            <b>Description: </b> {{ bookmark.description }}
+          </div>
+          <div class="panel-footer">
+            <b>By:</b> {{ bookmark.user }}
+            <div class="pull-right">
+              <b class=>Link Visits:</b>
+              <span class="badge">{{ bookmark.click_count }}</span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+  </div>
 </div>
 {% endblock %}
