@@ -81,6 +81,12 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+
+heroku_database = dj_database_url.config()
+if heroku_database:
+    DATABASES['default'] = heroku_database
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -120,3 +126,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = "/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
