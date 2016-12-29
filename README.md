@@ -3,9 +3,9 @@
 Live: [url shortener](http://urlshort-tdhuynh.herokuapp.com/)
 
 # Learning Objectives
-Use Django's default authentication views and forms
-How to display certain features to some users but not to others
-Understand of how multiple users can all use your site in their own way.
+* Use Django's default authentication views and forms
+* How to display certain features to some users but not to others
+* Understand of how multiple users can all use your site in their own way.
 
 # Features:
 User can save a URL as a bookmark with a title and an optional description.
